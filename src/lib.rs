@@ -41,6 +41,26 @@ pub fn get_args() -> MyResult<Config> {
     let omit_newline = matches.is_present("omit_newline");
     let env = matches.value_of("env").map(|c| c.to_string());
 
+    // 引数がなかったらECHOと出力して正常終了
+    if let (None, None) = (&text, &env) {
+        let echo_art = ["\n",
+            "#######      #######      #     #      #######",
+            "#            #            #     #      #     #",
+            "######       #            #######      #     #",
+            "#            #            #     #      #     #",
+            "#######      #######      #     #      #######",
+            "\n",
+            "🦀 << Enter characters or use -v to specify environment variables!"
+
+        ];
+
+        for i in echo_art {
+            println!("{}", i);
+        }
+
+        std::process::exit(0);
+    }
+
     Ok(Config {
         text,
         omit_newline,
