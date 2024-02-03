@@ -29,6 +29,16 @@ fn a_day_in_the_life() -> TestResult {
 }
 
 #[test]
+fn hello_no_newline_1() -> TestResult {
+    run(&["hello", "-n"], "hello")
+}
+
+#[test]
+fn hello_no_newline_2() -> TestResult {
+    run(&["-n", "Hello", "World"], "Hello World")
+}
+
+#[test]
 fn no_args() {
     Command::cargo_bin("my_echo")
         .unwrap()
