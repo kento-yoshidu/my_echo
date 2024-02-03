@@ -51,7 +51,6 @@ pub fn get_args() -> MyResult<Config> {
             "#######      #######      #     #      #######",
             "\n",
             "🦀 << Enter characters or use -v to specify environment variables!"
-
         ];
 
         for i in echo_art {
@@ -80,7 +79,11 @@ pub fn run(config: Config) -> MyResult<()> {
     if let Some(env) = config.env {
         match std::env::var(env.as_str()) {
             Ok(res) => {
-                let vec: Vec<&str> = res.split(";").collect();
+                let os_info = std::env::consts::OS;
+
+                let spl = if os_info == "windows" { ";" } else { ":" };
+
+                let vec: Vec<&str> = res.split(spl).collect();
 
                 for path in vec {
                     result.push(format!("{}\n", path.to_string()));
@@ -94,7 +97,7 @@ pub fn run(config: Config) -> MyResult<()> {
     }
 
     for str in result {
-        print!("{} ", str);
+        print!("\t{}", str);
     }
 
     if !config.omit_newline {
