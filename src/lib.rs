@@ -71,9 +71,7 @@ pub fn run(config: Config) -> MyResult<()> {
     let mut result = Vec::new();
 
     if let Some(vec) = config.text {
-        for str in vec {
-            result.push(str);
-        }
+        result.push(vec.join(" "));
     }
 
     if let Some(env) = config.env {
@@ -97,7 +95,7 @@ pub fn run(config: Config) -> MyResult<()> {
     }
 
     for str in result {
-        print!("\t{}", str);
+        print!("{}", str);
     }
 
     if !config.omit_newline {
